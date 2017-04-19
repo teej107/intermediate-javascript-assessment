@@ -12,19 +12,19 @@
 // Chain these functions off of $http (do not put them in variables)
 // The response object will look like this :
 /* 
-    {
-      data: [
-        {
-		 email: "awilliams0@intel.com",
-		 first_name: "Alan",
-		 gender: "Male",
-		 id: 1,
-		 last_name: "Williams"
-        },
-        { //...
-      ]
-    }
-*/
+ {
+ data: [
+ {
+ email: "awilliams0@intel.com",
+ first_name: "Alan",
+ gender: "Male",
+ id: 1,
+ last_name: "Williams"
+ },
+ { //...
+ ]
+ }
+ */
 
 // In the first .then function you use, assign the first user object (located in the response object)
 // to the variable 'firstUser' (previously declared).
@@ -35,18 +35,23 @@
 var firstUser = 'don\'t touch this string!';
 var thirdUser = 'don\'t touch this string, either!';
 
-function noWeakLink() {
+function noWeakLink()
+{
 
-  var promise = $http({
-    method: 'GET',
-    url: '/api/users'
-  })
-  // CODE HERE...
+    var promise = $http({
+        method: 'GET',
+        url: '/api/users'
+    }).then(function (success)
+    {
+        firstUser = success.data[0];
+    }).then(function (success)
+    {
+        thirdUser = success.data[2];
+        return success.data[9];
+    });
 
-
-  return promise;
+    return promise;
 }
-
 
 
 // *************
@@ -66,15 +71,15 @@ function noWeakLink() {
 // 'My name is Horton and I am very heavy!' (The above instructions should make this work.  No code needed for this paragraph)
 
 var elephant = {
-  name: 'Horton'
+    name: 'Horton'
 }
-function large() {
+function large()
+{
 
-  return 'My name is ' + this.name + ' and I am very heavy!'
+    return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
-
-
+var boundToElephant = large.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -86,8 +91,10 @@ function large() {
 // Use explicit binding to give capacity the context of crew and return the result.
 
 // CODE HERE...
-
-
+function deathStar(capacity, crew)
+{
+    return capacity.bind(crew);
+}
 
 // *************
 // * PROBLEM 4 *
@@ -101,8 +108,13 @@ function large() {
 // The closure function will returns the combined value of assets and liabilities.
 
 // CODE HERE...
-
-
+function accountingOffice(assets)
+{
+    return function (liabilities)
+    {
+        return assets + liabilities;
+    }
+}
 
 // *************
 // * PROBLEM 5 *
@@ -126,8 +138,19 @@ function large() {
 // };
 
 // CODE HERE...
-
-
+function forgetter(name)
+{
+    var arr = [];
+    var rememberall = function (item)
+    {
+        arr.push(item);
+        return {
+            name: name,
+            remember: arr
+        }
+    };
+    return rememberall;
+}
 
 // *************
 // * PROBLEM 6 *
@@ -154,3 +177,28 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+function frodo(startingHungerValue, startingDangerValue)
+{
+    var hunger = startingHungerValue;
+    var danger = startingDangerValue;
+    return {
+        dinnerOverFire: function ()
+        {
+            hunger -= 25;
+            danger += 40;
+            return {
+                hunger: Math.max(Math.min(hunger, 100), 0),
+                danger: Math.max(Math.min(danger, 100), 0)
+            }
+        },
+        hidingInBush: function ()
+        {
+            hunger += 35;
+            danger -= 20;
+            return {
+                hunger: Math.max(Math.min(hunger, 100), 0),
+                danger: Math.max(Math.min(danger, 100), 0)
+            }
+        }
+    }
+}

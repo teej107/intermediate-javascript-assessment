@@ -49,7 +49,6 @@ function noWeakLink()
     }).then(function (success)
     {
         thirdUser = success.data[2];
-        console.log(thirdUser);
         return success.data[9];
     });
 }

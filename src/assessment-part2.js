@@ -37,20 +37,21 @@ var thirdUser = 'don\'t touch this string, either!';
 
 function noWeakLink()
 {
-
     var promise = $http({
         method: 'GET',
         url: '/api/users'
-    }).then(function (success)
+    });
+
+    return promise.then(function (success)
     {
         firstUser = success.data[0];
+        return promise;
     }).then(function (success)
     {
         thirdUser = success.data[2];
+        console.log(thirdUser);
         return success.data[9];
     });
-
-    return promise;
 }
 
 

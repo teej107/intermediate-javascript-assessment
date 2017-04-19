@@ -103,7 +103,7 @@ function emailList($q, $http)
     }).then(function (success)
     {
         var arr = [];
-        success.data.data.forEach(function (e)
+        success.data.forEach(function (e)
         {
             arr.push(e.email);
         });
